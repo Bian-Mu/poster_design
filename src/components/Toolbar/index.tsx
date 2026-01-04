@@ -81,7 +81,7 @@ const Toolbar: React.FC = () => {
     const selected = getSelectedElement();
     if (selected) {
       if (selected.type === 'shape') {
-        updateElement(selected.id, { color: color });
+        updateElement(selected.id, { fillColor: color });
       } else if (selected. type === 'text') {
         updateElement(selected.id, { color: color });
       }

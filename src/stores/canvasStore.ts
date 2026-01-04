@@ -1,14 +1,18 @@
 import { create } from 'zustand';
-import type { CanvasElement } from '../types';
+import type { CanvasElement, ImageElement, ShapeElement, TextElement } from '../types';
+type ShapeUpdates = Partial<Omit<ShapeElement, 'id' | 'type'>>;
+type TextUpdates = Partial<Omit<TextElement, 'id' | 'type'>>;
+type ImageUpdates = Partial<Omit<ImageElement, 'id' | 'type'>>;
+
+type ElementUpdates = ShapeUpdates | TextUpdates | ImageUpdates;
 
 interface CanvasStore {
   elements: CanvasElement[];
   selectedId: string | null;
   canvasSize: { width: number; height: number };
-  
-  // Actions
-  addElement: (element:  CanvasElement) => void;
-  updateElement: (id:  string, updates: Partial<CanvasElement>) => void;
+
+  addElement: (element: CanvasElement) => void;
+  updateElement: (id: string, updates: ElementUpdates) => void; // <- 修复
   deleteElement: (id: string) => void;
   selectElement: (id: string | null) => void;
   reorderElements: (id: string, direction: 'up' | 'down' | 'top' | 'bottom') => void;
@@ -28,27 +32,27 @@ export const useCanvasStore = create<CanvasStore>((set, get) => ({
 
   updateElement: (id, updates) =>
     set((state) => ({
-      elements: state.elements. map((el) =>
-        el.id === id ? { ...el, ...updates } : el
+      elements: state.elements.map((el) =>
+        el.id === id ? ({ ...el, ...updates } as CanvasElement) : el
       ),
     })),
 
   deleteElement: (id) =>
     set((state) => ({
       elements: state.elements.filter((el) => el.id !== id),
-      selectedId: state.selectedId === id ? null :  state.selectedId,
+      selectedId: state.selectedId === id ? null : state.selectedId,
     })),
 
   selectElement: (id) => set({ selectedId: id }),
 
   reorderElements: (id, direction) =>
     set((state) => {
-      const elements = [... state.elements];
+      const elements = [...state.elements];
       const index = elements.findIndex((el) => el.id === id);
       if (index === -1) return state;
 
       const element = elements[index];
-      
+
       switch (direction) {
         case 'up':
           if (index < elements.length - 1) {
@@ -70,7 +74,6 @@ export const useCanvasStore = create<CanvasStore>((set, get) => ({
           break;
       }
 
-      // 重新分配 zIndex
       return {
         elements: elements.map((el, idx) => ({ ...el, zIndex: idx })),
       };
