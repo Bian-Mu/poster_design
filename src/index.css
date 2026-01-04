@@ -1,1 +1,9 @@
 @import "tailwindcss";
+
+button span{
+    font-size: medium;
+}
+
+h3 {
+    font-size:large;
+}

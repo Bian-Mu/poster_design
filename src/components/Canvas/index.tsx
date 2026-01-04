@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import Konva from 'konva';
-import { Stage, Layer, Rect } from 'react-konva';
+import { Stage, Layer } from 'react-konva';
 import { useCanvasStore } from '../../stores/canvasStore';
 import ShapeRenderer from './ShapeRenderer';
 import TextRenderer from './TextRenderer';
@@ -55,25 +55,15 @@ const exportImage = () => {
   React.useImperativeHandle(ref, () => ({ exportImage }), []);
 
   return (
-    <div style={{ display: 'inline-block' }}>
+    <div className='min-w-full min-h-full flex justify-center items-center'>
       <Stage
         ref={stageRef}
         width={canvasSize.width}
         height={canvasSize.height}
         onClick={handleStageClick}
-        style={{ border: '1px solid #ddd', background: '#fff' }}
+        style={{ border: '4px solid #ddd', background: 'white' }}
       >
         <Layer>
-          {/* 画布白底（显示效果 + 导出更直观） */}
-          <Rect
-            x={0}
-            y={0}
-            width={canvasSize.width}
-            height={canvasSize.height}
-            fill="#fff"
-            listening={false}
-          />
-
           {elements
             .slice()
             .sort((a, b) => a.zIndex - b.zIndex)

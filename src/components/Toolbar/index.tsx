@@ -2,6 +2,7 @@ import React, { useRef } from 'react';
 import { useCanvasStore } from '../../stores/canvasStore';
 import type { ShapeElement, ImageElement, TextElement } from '../../types';
 import { HexColorPicker } from 'react-colorful';
+import { Button } from 'antd';
 
 const Toolbar: React.FC = () => {
   const { addElement, getSelectedElement, updateElement } = useCanvasStore();
@@ -77,7 +78,6 @@ const Toolbar: React.FC = () => {
   };
 
 function darkenHex(hex: string, amount = 30) {
-  // hex: #rrggbb
   const h = hex.replace('#', '');
   if (h.length !== 6) return hex;
 
@@ -102,7 +102,7 @@ const handleColorChange = (color: string) => {
   if (selected.type === 'shape') {
     updateElement(selected.id, {
       fillColor: color,
-      strokeColor: darkenHex(color, 40), // 边框更深
+      strokeColor: darkenHex(color, 40), 
     });
   } else if (selected.type === 'text') {
     updateElement(selected.id, { color });
@@ -110,16 +110,16 @@ const handleColorChange = (color: string) => {
 };
 
   return (
-    <div style={{ padding: '10px', borderBottom: '1px solid #ddd' }}>
-      <button onClick={() => addShape('rect')}>矩形</button>
-      <button onClick={() => addShape('circle')}>圆形</button>
-      <button onClick={() => addShape('triangle')}>三角形</button>
-      <button onClick={() => addShape('star')}>星形</button>
-      <button onClick={addText}>文本</button>
-      <button onClick={() => fileInputRef.current?.click()}>导入图片</button>
-      <button onClick={() => setShowColorPicker(!showColorPicker)}>
+    <div className='h-full flex gap-2 items-center'>
+      <Button onClick={() => addShape('rect')}>矩形</Button>
+      <Button onClick={() => addShape('circle')}>圆形</Button>
+      <Button onClick={() => addShape('triangle')}>三角形</Button>
+      <Button onClick={() => addShape('star')}>星形</Button>
+      <Button onClick={addText}>文本</Button>
+      <Button onClick={() => fileInputRef.current?.click()}>导入图片</Button>
+      <Button onClick={() => setShowColorPicker(!showColorPicker)}>
         调色板
-      </button>
+      </Button>
       
       <input
         ref={fileInputRef}
@@ -130,7 +130,7 @@ const handleColorChange = (color: string) => {
       />
 
       {showColorPicker && (
-        <div style={{ position:  'absolute', zIndex: 1000 }}>
+        <div className='absolute top-[100px] left-[40px]'>
           <HexColorPicker color={currentColor} onChange={handleColorChange} />
         </div>
       )}

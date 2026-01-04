@@ -23,7 +23,7 @@ interface CanvasStore {
 export const useCanvasStore = create<CanvasStore>((set, get) => ({
   elements: [],
   selectedId: null,
-  canvasSize: { width: 800, height: 600 },
+  canvasSize: { width: 900, height: 1200 },
 
   addElement: (element) =>
     set((state) => ({
