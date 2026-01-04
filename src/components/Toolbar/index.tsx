@@ -76,17 +76,38 @@ const Toolbar: React.FC = () => {
     }
   };
 
-  const handleColorChange = (color: string) => {
-    setCurrentColor(color);
-    const selected = getSelectedElement();
-    if (selected) {
-      if (selected.type === 'shape') {
-        updateElement(selected.id, { fillColor: color });
-      } else if (selected. type === 'text') {
-        updateElement(selected.id, { color: color });
-      }
-    }
-  };
+function darkenHex(hex: string, amount = 30) {
+  // hex: #rrggbb
+  const h = hex.replace('#', '');
+  if (h.length !== 6) return hex;
+
+  const num = parseInt(h, 16);
+  const r = Math.max(0, (num >> 16) - amount);
+  const g = Math.max(0, ((num >> 8) & 0xff) - amount);
+  const b = Math.max(0, (num & 0xff) - amount);
+
+  return (
+    '#' +
+    [r, g, b]
+      .map((v) => v.toString(16).padStart(2, '0'))
+      .join('')
+  );
+}
+
+const handleColorChange = (color: string) => {
+  setCurrentColor(color);
+  const selected = getSelectedElement();
+  if (!selected) return;
+
+  if (selected.type === 'shape') {
+    updateElement(selected.id, {
+      fillColor: color,
+      strokeColor: darkenHex(color, 40), // 边框更深
+    });
+  } else if (selected.type === 'text') {
+    updateElement(selected.id, { color });
+  }
+};
 
   return (
     <div style={{ padding: '10px', borderBottom: '1px solid #ddd' }}>
