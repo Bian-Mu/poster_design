@@ -8,7 +8,7 @@ const LayerPanel: React.FC = () => {
   const sortedElements = [...elements].sort((a, b) => b.zIndex - a.zIndex);
 
   return (
-    <div className='p-4 h-[calc(100vh-64px)] ml-2'>
+    <div className='bg-[var(--custom-layers)] p-4 h-[calc(100vh-64px)] ml-2'>
       <h3>图层</h3>
       {sortedElements.map((element) => (
         <div
@@ -16,7 +16,7 @@ const LayerPanel: React.FC = () => {
           onClick={() => selectElement(element.id)}
           className='ml-2 overflow-auto w-3/4 text-lg p-2 my-2 cursor-pointer rounded'
           style={{
-            background: selectedId === element.id ?  '#e0f2fe' : '#f5f5f5',
+            background: selectedId === element.id ?  'var(--custom-bg)' : 'white',
           }}
         >
           <div className='flex justify-between'>

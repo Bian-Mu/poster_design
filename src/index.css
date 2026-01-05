@@ -7,3 +7,9 @@ button span{
 h3 {
     font-size:large;
 }
+
+@theme {
+    --custom-bg:#e8f5fd;
+    --custom-layer:#d2d5fc;
+    --custom-layers:#9ee5e5;
+}

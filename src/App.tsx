@@ -14,7 +14,7 @@ function App() {
 
   return (
     <div>
-      <div className='pl-4 pr-8 bg-gray-200 flex flex-row h-[64px] justify-between items-center'>
+      <div className='pl-4 pr-8 bg-[var(--custom-layer)] flex flex-row h-[64px] justify-between items-center'>
         <Toolbar />
         <div className='flex gap-2'>
           <Button danger icon={<DeleteOutlined />} onClick={clearCanvas}>
@@ -31,7 +31,7 @@ function App() {
       </div>
 
       <div className='flex flex-row h-[calc(100vh-64px)]'>
-        <div className='bg-gray-300 p-2 overflow-auto w-[calc(100vw-400px)]'>
+        <div className='bg-[var(--custom-bg)] p-2 overflow-auto w-[calc(100vw-400px)]'>
           <Canvas ref={canvasRef} />
         </div>
         <div className='absolute right-0 w-[400px] bg-white border-l border-gray-200'>
